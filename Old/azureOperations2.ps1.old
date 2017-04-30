@@ -1,0 +1,26 @@
+﻿<# 
+    Start/Stop VM
+    Upload DSC Configuration File
+    Generate MOF file
+
+    https://channel9.msdn.com/Blogs/MVP-Azure/Azure-Automation-DSC-Part-2-Configurations-Basics
+
+#>
+# Login as a Service Principal as the personal/@tripadvisor.com login won't work with PowerShell
+$subscr ="Visual Studio Professional"
+$applicationID = '06d491a7-1f02-4e97-b2b9-7e7df838bcb4'
+$tenantID = 'da213821-08ff-4b7c-a68c-51aeb4312857'
+$loc = 'westeurope'
+$autoAccount = 'DSCAutomation'
+$workDir = 'C:\Users\micma\OneDrive\Scripts\Powershell\Azure'
+
+# To create a key --> Azure Active Directory, App Registrations, App Name, Keys
+$key = ConvertTo-SecureString -String '+0DnKmsw9Wb4kaRXsfCmrO+OJ3pdcuyBQLqqTKSopEA=' -AsPlainText -Force
+$Credential = New-Object -TypeName "System.Management.Automation.PSCredential" -ArgumentList $applicationID, $key
+Login-AzureRmAccount -Credential $credential -ServicePrincipal -TenantId $tenantID
+$rg = Get-AzureRmResourceGroup -Location $loc
+$loc = 'westeurope'
+If (!($loc)){$loc = (Get-AzureRmLocation | OGV -passthru | select Location).location} #Select a location
+Get-AzureRmVm -OutVariable vms
+
+
