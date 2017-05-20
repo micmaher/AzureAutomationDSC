@@ -6,10 +6,15 @@ The end goal is to have these VMs fully configured as an Active Directory test l
 
 DSC on premise is limited as it does not have a management portal. In Azure we have the Azure Automation portal.
 
+Operations.ps1 contains sample commands to use the functions in this project. This is a good place to start to get an idea.
+
 ### Configurations
 
 Contains DSC resources
 
+1. newDomain.ps1
+2. newForest.ps1
+3. setupDC.ps1
 
 
 ### Functions
@@ -29,7 +34,14 @@ Create the initial environment in Azure. Typically run once
 
 #### DSCFunctions
 
+1. Get an Azure onboarding key
+2. Import DSC resources into Azure
+3. Read where the DSC Config is published
+
 #### OnboardFunctions
+
+1. Register a DSC node configuration
+2. Add a node configuration
 
 #### VMFunctions
 The main function for working with VMs in Azure

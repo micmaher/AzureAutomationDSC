@@ -7,8 +7,8 @@ Function Get-MmOnboardKey{
 Function Import-MmConfig{
     [CmdletBinding()]
     param(
-    [string] $ConfigName)    
-    # Imports a DSC Configuration from $workDir 
+    [string] $ConfigName)
+    # Imports a DSC Configuration from $workDir
     $AutoAccount = Get-AzureRMResourceGroup -Name $resourceGroup | Get-AzureRmAutomationAccount
     $AutoAccount | Import-AzureRmAutomationDscConfiguration -SourcePath "$workDir\$ConfigName" -Published -Force
     $AutoAccount | Get-AzureRmAutomationDscConfiguration -name $ConfigName
@@ -19,7 +19,7 @@ Function Import-MmConfig{
 Function Get-MmConfig{
     [CmdletBinding()]
     param(
-    [string] $VMName)    
-    # Imports a DSC Configuration from $workDir 
+    [string] $VMName)
+    # Gets a DSC Configuration from $workDir
     $AutoAccount = Get-AzureRMResourceGroup -Name $resourceGroup | Get-AzureRmAutomationAccount
     $AutoAccount | Get-AzureRmAutomationDscConfiguration -name $VMName}
