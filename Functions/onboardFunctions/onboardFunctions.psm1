@@ -1,27 +1,27 @@
 ﻿Function Register-MmDSCNode{
     [CmdletBinding()]
     param(
-    [string] $Name)    
+    [string] $Name)
     # Ensure VM is running
 
-    $VMInfo = Get-MmVm -Name $Name 
-    $PowerState = $VMInfo.Statuses | where {$_.code -like "PowerState*"}
+    $VMInfo = Get-MmVm -Name $Name
+    $PowerState = $VMInfo.Statuses | Where-Object {$_.code -like "PowerState*"}
     If ($powerState.DisplayStatus -like "*deallocated"){
         Write-Verbose "$Name is powered off"
         Start-MmVm -Name $Name -Verbose}
     $AutoAccount = Get-AzureRMResourceGroup -Name $resourceGroup | Get-AzureRmAutomationAccount
     $AutoAccount | Register-AzureRmAutomationDscNode -AzureVMName $Name -AzureVMResourceGroup $resourceGroup}
 
-Function Assign-MmDSCNodeConfiguration{
+Function Add-MmDSCNodeConfiguration{
     [CmdletBinding()]
     param(
     [string] $ConfigurationName,
     [string] $Name
-    )    
+    )
     # Ensure VM is running
 
-    $VMInfo = Get-MmVm -Name $Name 
-    $PowerState = $VMInfo.Statuses | where {$_.code -like "PowerState*"}
+    $VMInfo = Get-MmVm -Name $Name
+    $PowerState = $VMInfo.Statuses | Where-Object {$_.code -like "PowerState*"}
     If ($powerState.DisplayStatus -like "*deallocated"){
         Write-Verbose "$Name is powered off"
         Start-MmVm -Name $Name -Verbose}
