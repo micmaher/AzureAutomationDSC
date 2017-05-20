@@ -5,7 +5,6 @@ Dynamic Private IP with Test-AzureRmPrivateIPAddressAvailability -IPAddress 10.1
 #>
 
 # Login and assign global variables
-Set-Location 'C:\Users\micma\OneDrive\Scripts\Powershell\Azure'
 . .\loginAzure.ps1
 Start-Process iexplore.exe 'https://portal.azure.com/'
 
