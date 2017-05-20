@@ -16,7 +16,6 @@ Get-MmVmStatus -Name 'dc1' -Verbose
 break
 
 Start-MmVm -Name dc4
-Get-AzureRM
 
 New-MmVM -Name dc3 -Verbose
 Remove-MmVm -Name dc1 -Verbose
