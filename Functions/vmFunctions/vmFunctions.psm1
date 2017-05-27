@@ -9,7 +9,7 @@ Function Get-MmVm{
     [Parameter(Mandatory=$True,
         ValueFromPipeline=$True)]
 		[string]$Name
-    )     
+    )
     Begin{}
     Process{
     Get-AzureRmVm -ResourceGroupName $resourceGroup -Name $Name -Status}
@@ -23,7 +23,7 @@ Function New-MmVM{
             SKU: 2016-Datacenter
             Version: 2016.127.20170406
             Size: Basic_A2 (2 cores, 3.5 GB memory)
-    .URI 
+    .URI
         https://docs.microsoft.com/en-us/powershell/module/azurerm.compute/new-azurermvm?view=azurermps-1.7.0
     #>
     [CmdletBinding()]
@@ -53,7 +53,7 @@ Function New-MmVM{
 
     $subnetConfig = Get-AzureRmVirtualNetworkSubnetConfig -VirtualNetwork $vNet
     $Subnet = Get-AzureRmVirtualNetworkSubnetConfig -Name $SubnetConfig.Name -VirtualNetwork $VNet
-    
+
     $publicIP = New-AzureRmPublicIpAddress -Name "$($Name)-public" -ResourceGroupName $resourceGroup -AllocationMethod Dynamic -Location $loc
 
     # Test-AzureRmPrivateIPAddressAvailability -IPAddress 10.1.1.4 -VirtualNetwork $VNet
@@ -79,7 +79,7 @@ Function New-MmVM{
 Function Start-MmVm{
     [CmdletBinding()]
     param(
-    [string] $Name) 
+    [string] $Name)
 
     Get-AzureRmVm -ResourceGroupName $resourceGroup -Name $Name | Select-Object Name, ProvisioningState
     Write-Host -ForegroundColor Green "Starting VM this can take a few minutes"
@@ -98,13 +98,13 @@ Function Stop-AllMmVm{
 Function Stop-MmVm{
     [CmdletBinding()]
     param(
-    [string] $Name)    
-    Stop-AzureRmVM -Force -Name $Name}
+    [string] $Name)
+    Stop-AzureRmVM -Force -Name $Name -ResourceGroupName $resourceGroup}
 
 Function Remove-MmVm{
     [CmdletBinding()]
     param(
-    [string] $Name)    
+    [string] $Name)
     Write-Warning "Removing $Name"
     $check = Get-AzureRmVm -ResourceGroupName $resourceGroup -Name $Name
     If ($check){Remove-AzureRmVM -Name $Name -ResourceGroupName $resourceGroup}}
@@ -115,12 +115,12 @@ Function Get-MmVmStatus{
     [Parameter(Mandatory=$True,
         ValueFromPipeline=$True)]
 		[string[]]$Name
-    )   
+    )
     Begin{}
     Process{
-    Foreach ($n in $Name){ 
+    Foreach ($n in $Name){
         $VMInfo = Get-MmVm -Name $n
-        $PowerState = $VMInfo.Statuses | where {$_.code -like "PowerState*"}
+        $PowerState = $VMInfo.Statuses | Where-Object {$_.code -like "PowerState*"}
         If ($powerState.DisplayStatus -like "*deallocated"){Return "$n is powered off"}}
         }
     End{}}
