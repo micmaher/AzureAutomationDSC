@@ -1,4 +1,4 @@
-﻿<#
+<# 
     Part 1. Initial Set-up
         Create a Resource Group
         Create a network
@@ -8,7 +8,7 @@
 
         https://channel9.msdn.com/Blogs/MVP-Azure/Azure-Automation-DSC-Part-4-Advanced-onboarding-1
 
-    Part 2. Configuration Files
+    Part 2. Configuration Files  
         Start/Stop VM
         Upload DSC Configuration File
         Generate MOF file
@@ -18,7 +18,7 @@
     Part 3. Onboarding
         Onboard DSC Nodes
 
-        https://channel9.msdn.com/Blogs/MVP-Azure/Azure-Automation-DSC-Part-3-Onboarding-Azure-Windows-Nodes?ocid=player
+        https://channel9.msdn.com/Blogs/MVP-Azure/Azure-Automation-DSC-Part-3-Onboarding-Azure-Windows-Nodes?ocid=player   
 #>
 
 Function New-MmResourceGroup{
@@ -40,7 +40,7 @@ Function New-MmNetwork{
         'Location' = $loc
         'AddressPrefix' = $addressprefix
     }
-    $vNet = New-AzureRmVirtualNetwork @newVNetParams -Subnet $subnet
+    New-AzureRmVirtualNetwork @newVNetParams -Subnet $subnet
 
     # Create public IP
     $date = ((get-date).ToShortDateString()).Replace('/','')
@@ -51,7 +51,7 @@ Function New-MmNetwork{
         'DomainNameLabel' = "dom" + $date
         'Location' = $loc
     }
-    $publicIp = New-AzureRmPublicIpAddress @newPublicIpParams}
+    New-AzureRmPublicIpAddress @newPublicIpParams}
 
 Function New-MmStorageAccount{
     $staccount = Get-AzureRmStorageAccount -ResourceGroupName $resourceGroup
@@ -76,9 +76,9 @@ Function New-MmAutomationAccount{ #(Free Plan allows 5 VMs)
     }}
 
 
-Function Grant-MMRdpAccess{
+Function Grant-MMRdpAccess{    
  # Create an inbound network security group rule for port 3389
- $NSGRule = New-AzureRmNetworkSecurityRuleConfig `
+ New-AzureRmNetworkSecurityRuleConfig `
  -Name MyNsgRuleRDP `
  -Protocol Tcp `
  -Direction Inbound `
@@ -88,10 +88,10 @@ Function Grant-MMRdpAccess{
  -DestinationAddressPrefix * `
  -DestinationPortRange 3389 -Access Allow}
 
-Function Grant-MMRdpPermission{
+Function Grant-MMRdpPermission{  
  # Create a network security group
- $NSG = New-AzureRmNetworkSecurityGroup `
- -  ResourceGroupName $resourceGroup `
+ New-AzureRmNetworkSecurityGroup `
+ -ResourceGroupName $resourceGroup `
  -Location $Loc `
  -Name DefaultNetworkSecurityGroup `
  -SecurityRules $NSGRule}
