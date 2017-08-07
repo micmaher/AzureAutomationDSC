@@ -1,7 +1,6 @@
 
 
 Function Get-MmOnboardKey{
-    $AutoAccount = $resourceGroup | Get-AzureRmAutomationAccount | Select-Object AutomationAccountName
     Get-AzureRmAutomationRegistrationInfo -ResourceGroupName $resourceGroup -AutomationAccountName $DSCAutomationAccount}
 
 Function Import-MmConfig{
