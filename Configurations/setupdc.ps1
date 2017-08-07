@@ -24,4 +24,8 @@ Configuration DC {
         Name = 'NPAS'
     }
 
+    WindowsFeature AD-Domain-Services {
+        Name = 'AD-Domain-Services'
+    }    
+
 }
